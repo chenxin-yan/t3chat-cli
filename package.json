@@ -1,6 +1,6 @@
 {
   "name": "@cyanlabs/t3chat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "CLI wrapper for t3.chat",
   "bin": {
@@ -12,6 +12,9 @@
     "start": "./dist/cli",
     "check:types": "tsc --noEmit"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@crustjs/core": "^0.0.6",
     "@crustjs/plugins": "^0.0.7",
