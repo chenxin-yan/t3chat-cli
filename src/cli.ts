@@ -20,11 +20,25 @@ const main = defineCommand({
       description: "The message to send to t3.chat",
     },
   ],
+  flags: {
+    search: {
+      type: "boolean",
+      alias: "s",
+      description: "Enable web search",
+      default: false,
+    },
+    searchLimit: {
+      type: "number",
+      alias: "S",
+      description: "Number of search results",
+      default: 1,
+    },
+  },
   subCommands: {
     auth,
     models,
   },
-  async run({ args }) {
+  async run({ args, flags }) {
     if (args.prompt.length <= 0) {
       console.log(renderHelp(main));
       return;
@@ -41,7 +55,9 @@ const main = defineCommand({
     const modelId = getModel();
 
     try {
-      await sendMessage(prompt, modelId);
+      const search = flags.search;
+      const searchLimit = flags.searchLimit;
+      await sendMessage(prompt, modelId, search, searchLimit);
     } catch (e) {
       const err = e as Error;
       console.error(`Error: ${err.message}`);

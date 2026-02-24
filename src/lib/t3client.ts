@@ -263,6 +263,8 @@ function buildRequestBody(
   prompt: string,
   model: string,
   sessionId: string,
+  search: boolean,
+  searchLimit: number,
 ) {
   return {
     messages: [
@@ -282,8 +284,8 @@ function buildRequestBody(
     convexSessionId: sessionId,
     modelParams: {
       reasoningEffort: "low",
-      includeSearch: false,
-      searchLimit: 1,
+      includeSearch: search,
+      searchLimit: searchLimit,
     },
     preferences: {
       name: "",
@@ -294,7 +296,7 @@ function buildRequestBody(
     userConfiguration: {
       currentlySelectedModel: model,
       currentModelParameters: {
-        includeSearch: false,
+        includeSearch: search,
         reasoningEffort: "low",
       },
       hasMigrated: true,
@@ -327,6 +329,8 @@ function buildRequestBody(
 export async function sendMessage(
   prompt: string,
   model: string,
+  search: boolean,
+  searchLimit: number,
 ): Promise<void> {
   const cookies = requireCookies();
 
@@ -337,7 +341,7 @@ export async function sendMessage(
     );
   }
 
-  const body = buildRequestBody(prompt, model, sessionId);
+  const body = buildRequestBody(prompt, model, sessionId, search, searchLimit);
 
   let hasOutput = false;
 
