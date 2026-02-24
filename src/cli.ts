@@ -39,7 +39,6 @@ const main = defineCommand({
     }
 
     const modelId = getModel();
-    console.log(`Model: ${formatModelName(modelId)}\n`);
 
     try {
       await sendMessage(prompt, modelId);

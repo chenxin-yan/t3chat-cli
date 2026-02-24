@@ -72,6 +72,93 @@ async function curlRequest(
   return { body, httpStatus };
 }
 
+/**
+ * Run curl for SSE responses and parse `data:` lines incrementally.
+ *
+ * Returns the full raw body plus HTTP status so callers can keep their
+ * existing error handling logic.
+ */
+async function curlRequestSSE(
+  args: string[],
+  onEventData: (data: string) => void,
+): Promise<{ body: string; httpStatus: number }> {
+  const proc = Bun.spawn(
+    [
+      "curl",
+      "--silent",
+      "--show-error",
+      "-N",
+      "-w",
+      "\n__HTTP_STATUS__%{http_code}",
+      ...args,
+    ],
+    { stdout: "pipe", stderr: "pipe" },
+  );
+
+  const stderrTextPromise = new Response(proc.stderr).text();
+
+  const reader = proc.stdout.getReader();
+  const decoder = new TextDecoder();
+
+  let rawOutput = "";
+  let lineBuffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    const chunk = decoder.decode(value, { stream: true });
+    rawOutput += chunk;
+    lineBuffer += chunk;
+
+    while (true) {
+      const newlineIndex = lineBuffer.indexOf("\n");
+      if (newlineIndex === -1) break;
+
+      let line = lineBuffer.slice(0, newlineIndex);
+      lineBuffer = lineBuffer.slice(newlineIndex + 1);
+
+      if (line.endsWith("\r")) line = line.slice(0, -1);
+
+      if (!line.startsWith("data:")) continue;
+
+      const data = line.slice(5).trim();
+      if (!data || data === "[DONE]") continue;
+      onEventData(data);
+    }
+  }
+
+  const tail = decoder.decode();
+  rawOutput += tail;
+  lineBuffer += tail;
+
+  if (lineBuffer) {
+    const line = lineBuffer.endsWith("\r")
+      ? lineBuffer.slice(0, -1)
+      : lineBuffer;
+
+    if (line.startsWith("data:")) {
+      const data = line.slice(5).trim();
+      if (data && data !== "[DONE]") {
+        onEventData(data);
+      }
+    }
+  }
+
+  const exitCode = await proc.exited;
+  const stderrText = (await stderrTextPromise).trim();
+
+  const statusMatch = rawOutput.match(/__HTTP_STATUS__(\d+)\s*$/);
+  const httpStatus = statusMatch ? Number(statusMatch[1]) : 0;
+  const body = statusMatch ? rawOutput.slice(0, statusMatch.index) : rawOutput;
+
+  if (exitCode !== 0 && httpStatus === 0) {
+    throw new Error(`curl failed: ${stderrText || "unknown error"}`);
+  }
+
+  return { body, httpStatus };
+}
+
 function requireCookies(): string {
   const cookies = getCookies();
   if (!cookies) {
@@ -252,16 +339,35 @@ export async function sendMessage(
 
   const body = buildRequestBody(prompt, model, sessionId);
 
-  const { body: responseBody, httpStatus } = await curlRequest([
-    "-X",
-    "POST",
-    CHAT_API_URL,
-    "-H",
-    "Content-Type: application/json",
-    ...browserHeaders(cookies),
-    "-d",
-    JSON.stringify(body),
-  ]);
+  let hasOutput = false;
+
+  const { body: responseBody, httpStatus } = await curlRequestSSE(
+    [
+      "-X",
+      "POST",
+      CHAT_API_URL,
+      "-H",
+      "Content-Type: application/json",
+      ...browserHeaders(cookies),
+      "-d",
+      JSON.stringify(body),
+    ],
+    (data) => {
+      try {
+        const event = JSON.parse(data) as {
+          type: string;
+          delta?: string;
+        };
+
+        if (event.type === "text-delta" && event.delta) {
+          process.stdout.write(event.delta);
+          hasOutput = true;
+        }
+      } catch {
+        // Skip non-JSON lines
+      }
+    },
+  );
 
   if (httpStatus !== 200) {
     if (httpStatus === 403 || responseBody.includes("Vercel Security")) {
@@ -277,30 +383,6 @@ export async function sendMessage(
       );
     }
     throw new Error(`Chat API returned HTTP ${httpStatus}: ${responseBody}`);
-  }
-
-  // Parse SSE lines from the response body
-  const lines = responseBody.split("\n");
-  let hasOutput = false;
-
-  for (const line of lines) {
-    if (!line.startsWith("data: ")) continue;
-    const data = line.slice(6).trim();
-    if (data === "[DONE]") continue;
-
-    try {
-      const event = JSON.parse(data) as {
-        type: string;
-        delta?: string;
-      };
-
-      if (event.type === "text-delta" && event.delta) {
-        process.stdout.write(event.delta);
-        hasOutput = true;
-      }
-    } catch {
-      // Skip non-JSON lines
-    }
   }
 
   if (hasOutput) {
