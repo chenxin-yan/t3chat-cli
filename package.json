@@ -1,8 +1,8 @@
 {
-  "name": "t3chat-cli",
-  "version": "0.0.0",
+  "name": "@cyanlabs/t3chat",
+  "version": "0.0.1",
   "type": "module",
-  "description": "A CLI built with Crust",
+  "description": "CLI wrapper for t3.chat",
   "bin": {
     "chat": "dist/cli"
   },
@@ -13,11 +13,14 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@crustjs/core": "latest",
-    "@crustjs/plugins": "latest"
+    "@crustjs/core": "^0.0.6",
+    "@crustjs/plugins": "^0.0.7",
+    "@crustjs/prompts": "^0.0.3"
   },
   "devDependencies": {
-    "@crustjs/crust": "^0.0.9",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
+    "@crustjs/crust": "^0.0.10",
     "@types/bun": "latest",
     "typescript": "^5.9.3"
   }
