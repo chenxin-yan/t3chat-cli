@@ -10,7 +10,14 @@
     "dev": "bun run src/cli.ts",
     "build": "crust build",
     "start": "./dist/cli",
-    "check:types": "tsc --noEmit"
+    "check:types": "tsc --noEmit",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "bun run build && changeset publish"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "files": [
     "dist"
