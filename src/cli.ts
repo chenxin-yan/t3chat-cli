@@ -25,6 +25,11 @@ const main = defineCommand({
     },
   ],
   flags: {
+    model: {
+      type: "string",
+      alias: "m",
+      description: "Override the default model",
+    },
     search: {
       type: "boolean",
       alias: "s",
@@ -63,7 +68,7 @@ const main = defineCommand({
       process.exit(1);
     }
 
-    const modelId = getModel();
+    const modelId = flags.model || getModel();
     const search = flags.search;
     const searchLimit = flags.searchLimit;
 
