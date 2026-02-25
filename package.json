@@ -3,6 +3,10 @@
   "version": "0.0.3",
   "type": "module",
   "description": "CLI wrapper for t3.chat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenxin-yan/t3chat-cli"
+  },
   "bin": {
     "chat": "dist/cli"
   },
