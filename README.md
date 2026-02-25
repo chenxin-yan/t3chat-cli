@@ -1,6 +1,6 @@
 # t3chat-cli
 
-A command-line interface for [t3.chat](https://t3.chat) -- chat with multiple AI models (Claude, GPT, Gemini, DeepSeek, and more) directly from your terminal.
+A command-line interface for [t3.chat](https://t3.chat)
 
 ## Prerequisites
 
@@ -66,15 +66,7 @@ chat explain the difference between TCP and UDP
 
 The prompt is variadic -- quotes are optional for multi-word inputs. Responses stream directly to stdout.
 
-## Commands
-
-| Command           | Description                                     |
-| ----------------- | ----------------------------------------------- |
-| `chat <prompt>`   | Send a message to the selected AI model         |
-| `chat auth login` | Authenticate with t3.chat via cookie extraction |
-| `chat models`     | Interactively select the default model          |
-| `chat --help`     | Show help                                       |
-| `chat --version`  | Show version                                    |
+After the response, an interactive prompt appears so you can send follow-up messages with full conversation context. Press `Enter` on an empty line or `Ctrl+C` to exit.
 
 ## Configuration
 
@@ -106,22 +98,6 @@ bun run build
 
 # Run the built binary
 bun run start
-```
-
-### Project Structure
-
-```
-src/
-  cli.ts                 # CLI entry point and main command
-  commands/
-    auth/
-      index.ts           # Auth subcommand definition
-      login.ts           # Cookie-based login flow
-    models.ts            # Model selection command
-  lib/
-    config.ts            # Config file read/write (~/.config/t3chat-cli/)
-    constants.ts         # URLs, model utilities, cost tier logic
-    t3client.ts          # t3.chat API client (chat + model fetching)
 ```
 
 ### Built With
