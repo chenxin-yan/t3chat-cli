@@ -254,27 +254,45 @@ export async function fetchModels(): Promise<Model[]> {
 // ---------------------------------------------------------------------------
 
 /**
+ * A single message in the conversation history.
+ */
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  parts: Array<{ type: "text"; text: string }>;
+  attachments: never[];
+}
+
+/**
+ * Create a ChatMessage from a role and text content.
+ */
+export function createMessage(
+  role: "user" | "assistant",
+  text: string,
+): ChatMessage {
+  return {
+    id: randomUUID(),
+    role,
+    parts: [{ type: "text", text }],
+    attachments: [],
+  };
+}
+
+/**
  * Build the request body matching t3.chat's expected format.
  *
  * The payload was reverse-engineered from the browser's /api/chat request.
  * All top-level fields appear to be validated server-side.
  */
 function buildRequestBody(
-  prompt: string,
+  messages: ChatMessage[],
   model: string,
   sessionId: string,
   search: boolean,
   searchLimit: number,
 ) {
   return {
-    messages: [
-      {
-        id: randomUUID(),
-        role: "user",
-        parts: [{ type: "text", text: prompt }],
-        attachments: [],
-      },
-    ],
+    messages,
     threadMetadata: {
       id: randomUUID(),
       title: "",
@@ -327,11 +345,11 @@ function buildRequestBody(
  * text deltas to stdout.
  */
 export async function sendMessage(
-  prompt: string,
+  messages: ChatMessage[],
   model: string,
   search: boolean,
   searchLimit: number,
-): Promise<void> {
+): Promise<string> {
   const cookies = requireCookies();
 
   const sessionId = getConvexSessionId();
@@ -341,9 +359,10 @@ export async function sendMessage(
     );
   }
 
-  const body = buildRequestBody(prompt, model, sessionId, search, searchLimit);
+  const body = buildRequestBody(messages, model, sessionId, search, searchLimit);
 
   let hasOutput = false;
+  let accumulated = "";
 
   const { body: responseBody, httpStatus } = await curlRequestSSE(
     [
@@ -365,6 +384,7 @@ export async function sendMessage(
 
         if (event.type === "text-delta" && event.delta) {
           process.stdout.write(event.delta);
+          accumulated += event.delta;
           hasOutput = true;
         }
       } catch {
@@ -392,4 +412,6 @@ export async function sendMessage(
   if (hasOutput) {
     process.stdout.write("\n");
   }
+
+  return accumulated;
 }
