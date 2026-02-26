@@ -1,5 +1,11 @@
 # @cyanlabs/t3chat
 
+## 0.0.6
+
+### Patch Changes
+
+- e1a9dad: Fix searchLimit flag description to clarify it controls the number of searches the agent is allowed to make per response
+
 ## 0.0.5
 
 ### Patch Changes
