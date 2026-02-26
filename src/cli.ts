@@ -14,8 +14,8 @@ import { skillPlugin } from "@crustjs/skills";
 
 const main = defineCommand({
   meta: {
-    name: "chat",
-    description: "CLI wrapper for t3.chat",
+    name: "t3chat",
+    description: pkg.description,
   },
   args: [
     {
@@ -65,7 +65,7 @@ const main = defineCommand({
 
     const cookies = getCookies();
     if (!cookies) {
-      console.error("Not authenticated. Run `chat auth login` first.");
+      console.error("Not authenticated. Run `t3chat auth login` first.");
       process.exit(1);
     }
 

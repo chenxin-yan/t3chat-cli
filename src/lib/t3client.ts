@@ -162,7 +162,7 @@ async function curlRequestSSE(
 function requireCookies(): string {
   const cookies = getCookies();
   if (!cookies) {
-    throw new Error("Not authenticated. Run `chat auth login` first.");
+    throw new Error("Not authenticated. Run `t3chat auth login` first.");
   }
   return cookies;
 }
@@ -355,7 +355,7 @@ export async function sendMessage(
   const sessionId = getConvexSessionId();
   if (!sessionId) {
     throw new Error(
-      "Could not find convex-session-id in your cookies. Run `chat auth login` again.",
+      "Could not find convex-session-id in your cookies. Run `t3chat auth login` again.",
     );
   }
 
@@ -400,7 +400,7 @@ export async function sendMessage(
           "Blocked by Vercel's bot protection (403).",
           "Your cookies may have expired. Try:",
           "  1. Open t3.chat in Chrome and send a message",
-          "  2. Run `chat auth login` again with fresh cookies",
+          "  2. Run `t3chat auth login` again with fresh cookies",
           "",
           "Make sure to copy the FULL cookie header from a recent request.",
         ].join("\n"),

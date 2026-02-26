@@ -13,14 +13,14 @@ A command-line interface for [t3.chat](https://t3.chat)
 bun add -g @cyanlabs/t3chat
 ```
 
-Once installed, the CLI is available as the `chat` command.
+Once installed, the CLI is available as the `t3chat` command.
 
 ## Setup
 
 ### 1. Authenticate
 
 ```sh
-chat auth login
+t3chat auth login
 ```
 
 This opens [t3.chat](https://t3.chat) in your browser and walks you through extracting session cookies:
@@ -38,7 +38,7 @@ Your credentials are saved to `~/.config/t3chat-cli/config.json`.
 ### 2. Select a model (optional)
 
 ```sh
-chat models
+t3chat models
 ```
 
 Fetches the full model catalog from t3.chat and presents an interactive picker. Models are displayed with their provider and cost tier:
@@ -57,11 +57,11 @@ The default model is `kimi-k2.5` if none is selected.
 ## Usage
 
 ```sh
-chat "What is the capital of France?"
+t3chat "What is the capital of France?"
 ```
 
 ```sh
-chat explain the difference between TCP and UDP
+t3chat explain the difference between TCP and UDP
 ```
 
 The prompt is variadic -- quotes are optional for multi-word inputs. Responses stream directly to stdout.
@@ -81,8 +81,8 @@ All configuration is stored in `~/.config/t3chat-cli/config.json`:
 
 | Field     | Description                                              |
 | --------- | -------------------------------------------------------- |
-| `cookies` | Session cookies from t3.chat (set via `chat auth login`) |
-| `model`   | Selected model ID (set via `chat models`)                |
+| `cookies` | Session cookies from t3.chat (set via `t3chat auth login`) |
+| `model`   | Selected model ID (set via `t3chat models`)                |
 
 ## Development
 

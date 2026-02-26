@@ -8,7 +8,7 @@
     "url": "https://github.com/chenxin-yan/t3chat-cli"
   },
   "bin": {
-    "chat": "dist/cli"
+    "t3chat": "dist/cli"
   },
   "scripts": {
     "dev": "bun run src/cli.ts",

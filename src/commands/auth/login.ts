@@ -37,6 +37,6 @@ export const login = defineCommand({
     const config = loadConfig();
     config.cookies = cookies.trim();
     saveConfig(config);
-    console.log("\nCookies saved. You can now use `chat <prompt>` to chat.");
+    console.log("\nCookies saved. You can now use `t3chat <prompt>` to chat.");
   },
 });
