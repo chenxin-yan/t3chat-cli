@@ -40,7 +40,7 @@ const main = defineCommand({
     searchLimit: {
       type: "number",
       alias: "S",
-      description: "Number of search results",
+      description: "Number of searches the agent is allowed to make per response",
       default: 1,
     },
     interactive: {
