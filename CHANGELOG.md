@@ -1,5 +1,11 @@
 # @cyanlabs/t3chat
 
+## 0.0.5
+
+### Patch Changes
+
+- 9742a5b: rename `chat` to `t3chat`
+
 ## 0.0.4
 
 ### Patch Changes
