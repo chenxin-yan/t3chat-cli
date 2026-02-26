@@ -1,5 +1,12 @@
 # @cyanlabs/t3chat
 
+## 0.0.4
+
+### Patch Changes
+
+- b7e2e73: add skill integration
+- ce78629: add --model flag to override the default model
+
 ## 0.0.3
 
 ### Patch Changes
