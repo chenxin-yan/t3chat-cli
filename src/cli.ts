@@ -10,6 +10,7 @@ import {
   sendMessage,
   type ChatMessage,
 } from "./lib/t3client.ts";
+import { skillPlugin } from "@crustjs/skills";
 
 const main = defineCommand({
   meta: {
@@ -124,5 +125,10 @@ const main = defineCommand({
 });
 
 runMain(main, {
-  plugins: [versionPlugin(pkg.version), helpPlugin()],
+  plugins: [
+    skillPlugin({
+      version: pkg.version,
+      command: true,
+    }),
+    versionPlugin(pkg.version), helpPlugin()],
 });
