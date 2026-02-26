@@ -54,6 +54,16 @@ Kimi K2.5 (Moonshot) $
 
 The default model is `kimi-k2.5` if none is selected.
 
+### 3. Install agent skills (optional)
+
+```sh
+t3chat skill
+```
+
+Generates and installs agent skill files for detected AI coding agents (Claude Code, OpenCode). This lets your coding agent understand and use `t3chat` commands. An interactive prompt lets you toggle which agents to install/uninstall skills for.
+
+Skills are also auto-updated silently when a new CLI version is detected.
+
 ## Usage
 
 ```sh
@@ -67,6 +77,17 @@ t3chat explain the difference between TCP and UDP
 The prompt is variadic -- quotes are optional for multi-word inputs. Responses stream directly to stdout.
 
 After the response, an interactive prompt appears so you can send follow-up messages with full conversation context. Press `Enter` on an empty line or `Ctrl+C` to exit.
+
+### Options
+
+| Flag              | Alias | Type    | Default | Description                                                      |
+| ----------------- | ----- | ------- | ------- | ---------------------------------------------------------------- |
+| `--model`         | `-m`  | string  |         | Override the default model for a single query                    |
+| `--search`        | `-s`  | boolean | `false` | Enable web search                                                |
+| `--searchLimit`   | `-S`  | number  | `1`     | Number of searches the agent is allowed to make per response     |
+| `--interactive`   | `-i`  | boolean | `true`  | Enable interactive follow-up prompts (`--no-interactive` to disable) |
+| `--version`       | `-v`  |         |         | Show version number                                              |
+| `--help`          | `-h`  |         |         | Show help message                                                |
 
 ## Configuration
 
