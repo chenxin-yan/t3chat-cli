@@ -27,16 +27,17 @@
     "dist"
   ],
   "dependencies": {
-    "@crustjs/core": "^0.0.8",
-    "@crustjs/plugins": "^0.0.9",
-    "@crustjs/prompts": "^0.0.4",
-    "@crustjs/skills": "^0.0.3"
+    "@crustjs/core": "^0.0.9",
+    "@crustjs/plugins": "^0.0.10",
+    "@crustjs/prompts": "^0.0.7",
+    "@crustjs/skills": "^0.0.7",
+    "@crustjs/store": "^0.0.4"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
-    "@crustjs/crust": "^0.0.12",
-    "@types/bun": "latest",
+    "@crustjs/crust": "^0.0.13",
+    "@types/bun": "^1.3.9",
     "typescript": "^5.9.3"
   }
 }

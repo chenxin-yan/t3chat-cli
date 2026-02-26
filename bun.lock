@@ -5,17 +5,18 @@
     "": {
       "name": "t3chat-cli",
       "dependencies": {
-        "@crustjs/core": "^0.0.8",
-        "@crustjs/plugins": "^0.0.9",
-        "@crustjs/prompts": "^0.0.4",
-        "@crustjs/skills": "^0.0.3",
+        "@crustjs/core": "latest",
+        "@crustjs/plugins": "latest",
+        "@crustjs/prompts": "latest",
+        "@crustjs/skills": "latest",
+        "@crustjs/store": "latest",
       },
       "devDependencies": {
-        "@changesets/changelog-github": "^0.5.2",
-        "@changesets/cli": "^2.29.8",
-        "@crustjs/crust": "^0.0.12",
+        "@changesets/changelog-github": "latest",
+        "@changesets/cli": "latest",
+        "@crustjs/crust": "latest",
         "@types/bun": "latest",
-        "typescript": "^5.9.3",
+        "typescript": "latest",
       },
     },
   },
@@ -60,17 +61,19 @@
 
     "@changesets/write": ["@changesets/write@0.4.0", "", { "dependencies": { "@changesets/types": "^6.1.0", "fs-extra": "^7.0.1", "human-id": "^4.1.1", "prettier": "^2.7.1" } }, "sha512-CdTLvIOPiCNuH71pyDu3rA+Q0n65cmAbXnwWH84rKGiFumFzkmHNT8KHTMEchcxN+Kl8I54xGUhJ7l3E7X396Q=="],
 
-    "@crustjs/core": ["@crustjs/core@0.0.8", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-8TpYPcczETl/unVC7eOVAZA4xpymAUQLzuauTlBJWpVNd/lHBZLIDjSJObXudOai0K6xp3UO414CWouPDhklzw=="],
+    "@crustjs/core": ["@crustjs/core@0.0.9", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-/P0W+3Q+VZ4IIFbOvKqFGEVmZe9UDlwq0WB4gtc4MzUAExWeO9KZbaYxdmbFEXo9goFuHUv7dYoA0BL9bZKyww=="],
 
-    "@crustjs/crust": ["@crustjs/crust@0.0.12", "", { "dependencies": { "@crustjs/core": "0.0.8", "@crustjs/plugins": "0.0.9" }, "peerDependencies": { "typescript": "^5" }, "bin": { "crust": "dist/cli" } }, "sha512-6+kRq95s3lwRPyiNxK3s15tw1M761ufJG+isVZXGSl+7w7yVv9WCdmXdarAsXldiG+Xfe0RUCyOQ5RcnSJACPg=="],
+    "@crustjs/crust": ["@crustjs/crust@0.0.13", "", { "dependencies": { "@crustjs/core": "0.0.9", "@crustjs/plugins": "0.0.10", "@crustjs/style": "0.0.4" }, "peerDependencies": { "typescript": "^5" }, "bin": { "crust": "dist/cli" } }, "sha512-3LpV/70xTS5PkSWAQopjVF+ZkkdkCVy6W4gflzhHYzxH6Y/uWF0McVfUXDkq7H0+plcQeE8A5vGD9pT07Js8wg=="],
 
-    "@crustjs/plugins": ["@crustjs/plugins@0.0.9", "", { "peerDependencies": { "@crustjs/core": "0.0.8", "typescript": "^5" } }, "sha512-drGUBYCLO04t/5mTDaL1AzMwlrppkiv0TJ0wIzTamwTEbG0YQQXALYryMSGvoUQgGSy9pdh+g1u9QvHXInPQBw=="],
+    "@crustjs/plugins": ["@crustjs/plugins@0.0.10", "", { "peerDependencies": { "@crustjs/core": "0.0.9", "typescript": "^5" } }, "sha512-7XQ5ekZl+BBU4l01RJ0je58XmQKjxrJNeVnP0Idh1No2ixlZuoqv7Ydxpg99ov+ZWAmCyDDEfXDZmUGSD2j7Nw=="],
 
-    "@crustjs/prompts": ["@crustjs/prompts@0.0.4", "", { "dependencies": { "@crustjs/style": "0.0.3" }, "peerDependencies": { "typescript": "^5" } }, "sha512-OA9wN5hwjGycYt5BcZKLCnGpszPHWtu9RKYBlyqIndLEE4ObDU5lp/q9MXNOKhMYhC4nvpUkmkTlyr4urDzfSA=="],
+    "@crustjs/prompts": ["@crustjs/prompts@0.0.7", "", { "dependencies": { "@crustjs/style": "0.0.4" }, "peerDependencies": { "typescript": "^5" } }, "sha512-/RQHMm8pwuAs0LrJHOTUWHJVb8Q5tJ1WnD5/hvmCXXUTi1+gjgHrb/SiH2W/D5ivatTa/Qgb5vnNCIB+A6ctuA=="],
 
-    "@crustjs/skills": ["@crustjs/skills@0.0.3", "", { "peerDependencies": { "@crustjs/core": "0.0.8", "@crustjs/prompts": "0.0.4", "typescript": "^5" } }, "sha512-x3+5pvkYWrfxr4l1/nSV5KOLIRNHU7hzKbWAGqrA64h0XBMpHmaKZ9VkGZYTNT5pFuMHKLKk4V1YLphx7WPnCw=="],
+    "@crustjs/skills": ["@crustjs/skills@0.0.7", "", { "peerDependencies": { "@crustjs/core": "0.0.9", "@crustjs/prompts": "0.0.7", "typescript": "^5" } }, "sha512-nIjmT2EgGu9zEaSsk5BN8BoR0mS9fiIzxKfdr34MbZ5rFHJG3gx05lmX0kayOn3W3+rK9Ztv0Zeohc5pn4Yowg=="],
 
-    "@crustjs/style": ["@crustjs/style@0.0.3", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-Jdp3WYHLFRzOrcgevsrj6YLD4qDTFoEVW0S8YYvy7H/fPYr9CCfOIqTwa5CXhSxS87K+2hboU98IeesGt1M1Pw=="],
+    "@crustjs/store": ["@crustjs/store@0.0.4", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-pfYuykVBH08HKBpycPcBZrk4CSQMVhccENDANbJoGXX86YjZk5urjzaJGeGXR1S4DVCt6hGC15aiRf6SEbpyag=="],
+
+    "@crustjs/style": ["@crustjs/style@0.0.4", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-yCpXARz8+i8FBceu6dCAxf1ebc53E0bSyWXLeop2GD1RtbVpS2i6p8QmQOdTGB1zdadYpf6V+HRFoz//AlQ0ew=="],
 
     "@inquirer/external-editor": ["@inquirer/external-editor@1.0.3", "", { "dependencies": { "chardet": "^2.1.1", "iconv-lite": "^0.7.0" }, "peerDependencies": { "@types/node": ">=18" }, "optionalPeers": ["@types/node"] }, "sha512-RWbSrDiYmO4LbejWY7ttpxczuwQyZLBUyygsA9Nsv95hpzUWwnNTVQmAq3xuh7vNwCp07UTmE5i11XAEExx4RA=="],
 

@@ -40,7 +40,8 @@ const main = defineCommand({
     searchLimit: {
       type: "number",
       alias: "S",
-      description: "Number of searches the agent is allowed to make per response",
+      description:
+        "Number of searches the agent is allowed to make per response",
       default: 1,
     },
     interactive: {
@@ -81,7 +82,7 @@ const main = defineCommand({
         messages,
         modelId,
         search,
-        searchLimit,
+        searchLimit
       );
       messages.push(createMessage("assistant", response));
     } catch (e) {
@@ -111,7 +112,7 @@ const main = defineCommand({
           messages,
           modelId,
           search,
-          searchLimit,
+          searchLimit
         );
         messages.push(createMessage("assistant", response));
       } catch (e) {
@@ -130,5 +131,7 @@ runMain(main, {
       version: pkg.version,
       command: true,
     }),
-    versionPlugin(pkg.version), helpPlugin()],
+    versionPlugin(pkg.version),
+    helpPlugin(),
+  ],
 });
