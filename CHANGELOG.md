@@ -1,5 +1,12 @@
 # @cyanlabs/t3chat
 
+## 0.0.7
+
+### Patch Changes
+
+- 9c3b898: migrate to use @crustjs/store
+- bfbb108: update dependencies
+
 ## 0.0.6
 
 ### Patch Changes
