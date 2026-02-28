@@ -8,7 +8,7 @@ import {
   getCostTier,
   formatModelName,
 } from "./constants.ts";
-import { getCookies, getConvexSessionId, getModel } from "./config.ts";
+import { authStore, getConvexSessionId } from "./config.ts";
 
 // ---------------------------------------------------------------------------
 // Shared curl helpers
@@ -159,12 +159,12 @@ async function curlRequestSSE(
   return { body, httpStatus };
 }
 
-function requireCookies(): string {
-  const cookies = getCookies();
-  if (!cookies) {
+async function requireCookies(): Promise<string> {
+  const auth = await authStore.read();
+  if (!auth.cookies) {
     throw new Error("Not authenticated. Run `t3chat auth login` first.");
   }
-  return cookies;
+  return auth.cookies;
 }
 
 // ---------------------------------------------------------------------------
@@ -191,7 +191,7 @@ interface TrpcModelBenchmark {
  * Model[] format.
  */
 export async function fetchModels(): Promise<Model[]> {
-  const cookies = requireCookies();
+  const cookies = await requireCookies();
 
   const input = encodeURIComponent(
     JSON.stringify({ json: null, meta: { values: ["undefined"] } }),
@@ -350,9 +350,9 @@ export async function sendMessage(
   search: boolean,
   searchLimit: number,
 ): Promise<string> {
-  const cookies = requireCookies();
+  const cookies = await requireCookies();
 
-  const sessionId = getConvexSessionId();
+  const sessionId = await getConvexSessionId();
   if (!sessionId) {
     throw new Error(
       "Could not find convex-session-id in your cookies. Run `t3chat auth login` again.",

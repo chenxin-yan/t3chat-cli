@@ -1,6 +1,6 @@
 import { defineCommand } from "@crustjs/core";
 import { filter, spinner } from "@crustjs/prompts";
-import { loadConfig, saveConfig } from "../lib/config.ts";
+import { modelStore } from "../lib/config.ts";
 import { DEFAULT_MODEL_ID } from "../lib/constants.ts";
 import { fetchModels } from "../lib/t3client.ts";
 
@@ -10,7 +10,7 @@ export const models = defineCommand({
     description: "Select the default model for chat",
   },
   async run() {
-    const config = loadConfig();
+    const config = await modelStore.read();
     const currentModel = config.model ?? DEFAULT_MODEL_ID;
 
     const modelList = await spinner({
@@ -29,8 +29,7 @@ export const models = defineCommand({
       })),
     });
 
-    config.model = selected;
-    saveConfig(config);
+    await modelStore.write({ model: selected });
     const model = modelList.find((m) => m.id === selected);
     console.log(`\nDefault model set to: ${model?.name ?? selected}`);
   },

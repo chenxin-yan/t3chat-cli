@@ -4,7 +4,7 @@ import { CancelledError, input } from "@crustjs/prompts";
 import pkg from "../package.json";
 import { auth } from "./commands/auth/index.ts";
 import { models } from "./commands/models.ts";
-import { getCookies, getModel } from "./lib/config.ts";
+import { authStore, modelStore } from "./lib/config.ts";
 import {
   createMessage,
   sendMessage,
@@ -64,13 +64,14 @@ const main = defineCommand({
 
     const prompt = args.prompt.join(" ");
 
-    const cookies = getCookies();
-    if (!cookies) {
+    const auth = await authStore.read();
+    if (!auth.cookies) {
       console.error("Not authenticated. Run `t3chat auth login` first.");
       process.exit(1);
     }
 
-    const modelId = flags.model || getModel();
+    const modelConfig = await modelStore.read();
+    const modelId = flags.model || modelConfig.model;
     const search = flags.search;
     const searchLimit = flags.searchLimit;
 

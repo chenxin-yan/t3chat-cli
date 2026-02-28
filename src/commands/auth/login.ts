@@ -1,6 +1,6 @@
 import { defineCommand } from "@crustjs/core";
 import { input } from "@crustjs/prompts";
-import { loadConfig, saveConfig } from "../../lib/config.ts";
+import { authStore } from "../../lib/config.ts";
 import { T3_CHAT_URL } from "../../lib/constants.ts";
 
 export const login = defineCommand({
@@ -34,9 +34,7 @@ export const login = defineCommand({
       },
     });
 
-    const config = loadConfig();
-    config.cookies = cookies.trim();
-    saveConfig(config);
+    await authStore.write({ cookies: cookies.trim() });
     console.log("\nCookies saved. You can now use `t3chat <prompt>` to chat.");
   },
 });
